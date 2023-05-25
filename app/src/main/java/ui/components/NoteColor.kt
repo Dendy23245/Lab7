@@ -1,61 +1,30 @@
-package com.topic2.android.notes
+package ui.components
 
-import android.annotation.SuppressLint
-import android.os.Bundle
-import androidx.activity.compose.setContent
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.Scaffold
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.rememberCoroutineScope
-import com.topic2.android.notes.routing.Screen
-import com.topic2.android.notes.theme.NotesTheme
-import com.topic2.android.notes.viewmodel.MainViewModel
-import com.topic2.android.notes.viewmodel.MainViewModelFactory
-import kotlinx.coroutines.launch
-import ui.components.AppDrawer
-import ui.components.Note
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 
-/**
- * Main activity приложения.
- */
-class MainActivity : AppCompatActivity() {
+@Composable
+fun NoteColor(){
+    Box(
+        modifier = Modifier
+            .size(40.dp)
+            .clip(CircleShape)
+            .background(Color.Red)
 
-    private val viewModel: MainViewModel by viewModels(factoryProducer = {
-        MainViewModelFactory(
-            this,
-            (application as NotesApplication).dependencyInjector.repository
-        )
-    })
 
-    @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    )
+}
 
-        setContent {
-            NotesTheme{
-                val coroutineScope = rememberCoroutineScope()
-                val scaffoldState: ScaffoldState = rememberScaffoldState()
-
-                Scaffold(
-                    scaffoldState = scaffoldState,
-                    drawerContent = {
-                        AppDrawer(
-                            currentScreen = Screen.Notes,
-                            closeDrawerAction = {
-                                coroutineScope.launch {
-                                    scaffoldState.drawerState.close()
-                                }
-                            }
-                        )
-                    },
-                    content = {
-                        Note()
-                    }
-                )
-            }
-
-        }
-    }
+@Preview
+@Composable
+fun NoteColorPreview(){
+    NoteColor()
 }
